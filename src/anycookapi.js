@@ -250,11 +250,6 @@
 
                 AnycookAPI._settings(settings);
 
-                var numScripts = settings.scripts.length;
-                var numLoaded = 0;
-
-
-
                 //get session id
                 AnycookAPI.session.id(function(sessionId){
                     settings.sessionId = sessionId;
