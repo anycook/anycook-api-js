@@ -254,12 +254,10 @@
             var dfd = $.Deferred();
 
             //get session id
-            $.when(dfd.promise()).then(function(){
-                AnycookAPI.session.id(function(sessionId){
-                    settings.sessionId = sessionId;
-                    AnycookAPI._settings(settings);
-                    dfd.resolve();
-                });
+            AnycookAPI.session.id(function(sessionId){
+                settings.sessionId = sessionId;
+                AnycookAPI._settings(settings);
+                dfd.resolve();
             });
 
 			return dfd.promise();
