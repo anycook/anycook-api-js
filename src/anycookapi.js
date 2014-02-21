@@ -21,6 +21,15 @@
 
 'use strict';
 (function( $ , globals){
+    var loadCredentials = function(path){
+        var dfd = $.Deferred();
+
+        if(!path) { dfd.resolve(); }
+        else { $.getJSON(path, dfd.resolve); }
+
+        return dfd.promise();
+    }
+
 	globals.AnycookAPI = {
 		_settings : function(settings){
 			if(settings){ $(document).data('AnycookAPI', settings);	}
@@ -222,42 +231,34 @@
 			var settings = {
 				appId: -1,
 				baseUrl: 'http://api.anycook.de',
-				scripts: [
-					'autocomplete',
-					'category',
-					'discover',
-					'discussion',
-					'ingredient',
-					'life',
-					'message',
-					'registration',
-					'recipe',
-					'search',
-					'setting',
-					'session',
-					'tag',
-					'upload',
-					'user'
-				],
+                credentials: 'anycook-credentials.json',
 				error : function(xhr){
 					console.error(xhr);
 				}
 			};
 
-			if(options){ $.extend(settings, options); }
+			if(options){
+                $.extend(settings, options);
+            }
 
-            AnycookAPI._settings(settings);
+            $.when(loadCredentials(settings.credentials)).then(function(json){
+                if(json){
+                    $.extend(settings, json);
+                }
 
-			var numScripts = settings.scripts.length;
-			var numLoaded = 0;
-
-            var dfd = $.Deferred();
-
-            //get session id
-            AnycookAPI.session.id(function(sessionId){
-                settings.sessionId = sessionId;
                 AnycookAPI._settings(settings);
-                dfd.resolve();
+
+                var numScripts = settings.scripts.length;
+                var numLoaded = 0;
+
+                var dfd = $.Deferred();
+
+                //get session id
+                AnycookAPI.session.id(function(sessionId){
+                    settings.sessionId = sessionId;
+                    AnycookAPI._settings(settings);
+                    dfd.resolve();
+                });
             });
 
 			return dfd.promise();
