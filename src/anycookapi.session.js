@@ -16,7 +16,9 @@
  * along with this program. If not, see [http://www.gnu.org/licenses/].
  *
  * @author Jan Graßegger <jan@anycook.de>
+ * requires anycookapi.js
  */
+
 'use strict';
 //session([callback])
 AnycookAPI.session = function(callback, error){

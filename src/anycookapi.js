@@ -16,17 +16,15 @@
  * along with this program. If not, see [http://www.gnu.org/licenses/].
  *
  * @author Jan Graßegger <jan@anycook.de>
+ * requires anycookapi.js
  */
+
 'use strict';
 (function( $ , globals){
 	globals.AnycookAPI = {
 		_settings : function(settings){
-			if(settings){
-				$(document).data('AnycookAPI', settings);
-			}
-			else{
-				return $(document).data('AnycookAPI');
-			}
+			if(settings){ $(document).data('AnycookAPI', settings);	}
+			else{ return $(document).data('AnycookAPI'); }
 		},
 		_get : function(api, data, callback, error){
 			api = api || '';
@@ -183,9 +181,7 @@
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
 
-			if(!(typeof data === 'string')){
-				data = JSON.stringify(data);
-			}
+			if(!(typeof data === 'string')){ data = JSON.stringify(data); }
 
 			return $.ajax({
 			    url: url+'?appId='+settings.appId,
@@ -223,7 +219,6 @@
 			});
 		},
 		init : function(options){
-			var dfd = $.Deferred();
 			var settings = {
 				appId: -1,
 				baseUrl: 'http://api.anycook.de',
@@ -249,40 +244,25 @@
 				}
 			};
 
-			if(options){
-				$.extend(settings, options);
-			}
+			if(options){ $.extend(settings, options); }
 
             AnycookAPI._settings(settings);
 
 			var numScripts = settings.scripts.length;
 			var numLoaded = 0;
 
-			var checkLoaded = function(){
-				numLoaded++;
-				if(numLoaded === numScripts){
-					dfd.resolve();
-				}
-			};
-
-			for(var i in settings.scripts){
-				var script = settings.scripts[i];
-				$.getScript(settings.baseUrl+'/js/anycookapi.'+script+'.js', checkLoaded);
-			}
-
-            var dfd2 = $.Deferred();
+            var dfd = $.Deferred();
 
             //get session id
             $.when(dfd.promise()).then(function(){
                 AnycookAPI.session.id(function(sessionId){
                     settings.sessionId = sessionId;
-                    console.log(sessionId);
                     AnycookAPI._settings(settings);
-                    dfd2.resolve();
+                    dfd.resolve();
                 });
             });
 
-			return dfd2.promise();
+			return dfd.promise();
 		}
 	};
 })( jQuery, this);
