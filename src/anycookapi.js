@@ -241,6 +241,8 @@
                 $.extend(settings, options);
             }
 
+            var dfd = $.Deferred();
+
             $.when(loadCredentials(settings.credentials)).then(function(json){
                 if(json){
                     $.extend(settings, json);
@@ -251,7 +253,7 @@
                 var numScripts = settings.scripts.length;
                 var numLoaded = 0;
 
-                var dfd = $.Deferred();
+
 
                 //get session id
                 AnycookAPI.session.id(function(sessionId){
