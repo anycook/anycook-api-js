@@ -25,7 +25,7 @@
         var dfd = $.Deferred();
 
         if(!path) { dfd.resolve(); }
-        else { $.getJSON(path, dfd.resolve); }
+        else { $.getJSON(path).always(dfd.resolve); }
 
         return dfd.promise();
     }
