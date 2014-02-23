@@ -73,12 +73,19 @@ $.extend(AnycookAPI.message, {
 		var data = {lastId : lastid};
 		return AnycookAPI._get(path, data, callback);
 	},
-	//number([lastnum] [,callback])
+	//number([lastnum] [,callback, error])
 	number : function(){
 		var lastnum = -1;
 		var callback;
+        var error;
 
 		switch(arguments.length){
+        case 3:
+            var type3 = typeof arguments[1];
+            if(type3 === 'function'){
+                error = arguments[2];
+            }
+            /* falls through */
 		case 2:
 			var type2 = typeof arguments[1];
 			if(type2 === 'function'){
