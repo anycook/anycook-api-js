@@ -113,8 +113,7 @@ $.extend(AnycookAPI.message, {
 	//writeMessage(sessionid, text, [,callback])
 	answer : function(sessionid, text, callback){
 		var path = '/message/'+sessionid;
-		var data = {text : text};
-		AnycookAPI._postJSON(path, data, callback);
+		AnycookAPI._postJSON(path, text, callback);
 	},
 	//writeNewMessage(recipients, text [, callback])
 	writeNew : function(recipients, text, callback){
