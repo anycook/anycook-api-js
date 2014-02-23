@@ -26,6 +26,11 @@ AnycookAPI.setting = {
 		var path = '/setting/email';
 		return AnycookAPI._postJSON(path, code, callback, error);
 	},
+    //changePassword(oldPassword, newPassword [, callback [, error]])
+    changePassword : function(oldPassword, newPassword, callback, error){
+        var path = '/setting/password';
+        return AnycookAPI._putJSON(path, {newPassword:newPassword, oldPassword:oldPassword}, callback, error);
+    },
 	//setMail(newMail [, callback])
 	setMail : function(newMail, callback){
 		var path = '/setting/email';
