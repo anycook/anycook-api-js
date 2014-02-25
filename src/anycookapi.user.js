@@ -68,7 +68,7 @@ $.extend(AnycookAPI.user, {
 	image : function(user, type){
 		var settings = AnycookAPI._settings();
 		type = type || 'small';
-		return settings.baseUrl+'/user/'+encodeURIComponent(user)+'/image?type='+type+'&appid='+settings.appid+'+&'+Math.random();
+		return settings.baseUrl+'/user/'+encodeURIComponent(user)+'/image?type='+type+'&appid='+settings.appid;
 	},
 	//follow(userid)
 	follow : function(userid){
