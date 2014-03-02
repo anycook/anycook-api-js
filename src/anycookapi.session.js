@@ -41,6 +41,10 @@ $.extend(AnycookAPI.session, {
 		};
 		return AnycookAPI._postJSON(path, data, callback, error);
 	},
+    facebookLogin : function(signedRequest, callback, error){
+        var path = '/session/facebook';
+        return AnycookAPI._postJSON(path, signedRequest, callback, error);
+    },
 	//logout([callback])
 	logout : function(callback){
 		var path = '/session';
