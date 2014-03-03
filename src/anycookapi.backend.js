@@ -21,7 +21,12 @@
 'use strict';
 AnycookAPI.backend = {
     recipe : function(callback, error){
+        this.version = function(recipeName, callback, error){
+            var path = '/backend/recipe/'+recipeName+'/version';
+            return AnycookAPI._get(path, "", callback, error);
+        };
+
         var path = "/backend/recipe";
-        AnycookAPI._get(path, "", callback, error);
+        return AnycookAPI._get(path, "", callback, error);
     }
 }
