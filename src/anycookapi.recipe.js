@@ -182,5 +182,10 @@ $.extend(AnycookAPI.recipe, {
 	unmakeSchmeckt : function(recipename,callback){
 		var path = '/recipe/'+recipename+'/schmeckt';
 		AnycookAPI._delete(path, {}, callback);
-	}
+	},
+    //version(recipeName ...)
+    version : function(recipeName, callback, error){
+        var path = '/recipe/'+recipeName+'/version';
+        AnycookAPI._get(path, {}, callback, error);
+    }
 });
