@@ -72,7 +72,7 @@ AnycookAPI.recipe = function(){
 		path += '/'+recipe;
 	}
 	if(version){
-		path += '/'+version;
+		path += '/version/'+version;
 	}
 	return AnycookAPI._get(path, data, callback);
 };
@@ -109,7 +109,7 @@ $.extend(AnycookAPI.recipe, {
 		var path = '/recipe/'+recipe;
 
 		if(versionid){
-			path += '/'+versionid;
+			path += '/version/'+versionid;
 		}
 		path += '/ingredients';
 
@@ -146,7 +146,7 @@ $.extend(AnycookAPI.recipe, {
 		var path = '/recipe/'+recipe;
 
 		if(versionid){
-			path += '/'+versionid;
+			path += '/version/'+versionid;
 		}
 		path += '/steps';
 
