@@ -83,6 +83,6 @@ $.extend(AnycookAPI.user, {
 	//recommendations([callback])
 	recommendations : function(callback){
 		var path = '/user/recommendations';
-		return AnycookAPI._get(path, callback);
+		return AnycookAPI._get(path, {}, callback);
 	}
 });
