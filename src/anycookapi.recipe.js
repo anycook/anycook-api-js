@@ -20,7 +20,7 @@
  */
 
 'use strict';
-//recipe([detailed = 'boolean']) or
+//recipe([detailed = 'boolean'], [callback]) or
 //recipe(recipename,[versionnum],[data] [callback])
 AnycookAPI.recipe = function(){
     var recipe;
@@ -59,7 +59,7 @@ AnycookAPI.recipe = function(){
         var type1 = typeof arguments[0];
         if(type1 === 'boolean'){
             data = {
-                detailed : arguments[0];
+                detailed : arguments[0]
             }
         }
         else if(type1 === 'string'){
