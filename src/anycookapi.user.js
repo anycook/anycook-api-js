@@ -21,15 +21,24 @@
 
 'use strict';
 //user([detailed -> boolean], [callback]) or
-//user(userid, [callback])
+//user(userid, [adminDetails -> boolean], [callback])
 AnycookAPI.user = function(){
     var userid;
     var callback;
     var data = {};
     switch(arguments.length){
+    case 3:
+        var type3 = typeof arguments[2];
+        if(type3 === 'function'){
+            callback = arguments[2];
+        }
+        /* falls through */
     case 2:
         var type2 = typeof arguments[1];
-        if(type2 === 'function'){
+        if(type2 === 'boolean'){
+            data.adminDetails = arguments[1];
+        }
+        else if(type2 === 'function'){
             callback = arguments[1];
         }
         /* falls through */
