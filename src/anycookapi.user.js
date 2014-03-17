@@ -25,6 +25,7 @@
 AnycookAPI.user = function(){
     var userid;
     var callback;
+    var data = {};
     switch(arguments.length){
     case 2:
         var type2 = typeof arguments[1];
@@ -34,6 +35,9 @@ AnycookAPI.user = function(){
         /* falls through */
     case 1:
         var type1 = typeof arguments[0];
+        if(type1 === 'boolean'){
+            data.detailed = arguments[0];
+        }
         if(type1 === 'string' || type1 === 'number'){
             userid = arguments[0];
         }
@@ -46,7 +50,7 @@ AnycookAPI.user = function(){
     if(userid !== undefined){
         path += '/'+userid;
     }
-    return AnycookAPI._get(path, {}, callback);
+    return AnycookAPI._get(path, data, callback);
 
 };
 
