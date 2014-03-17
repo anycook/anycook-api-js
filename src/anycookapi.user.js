@@ -20,69 +20,70 @@
  */
 
 'use strict';
-//user([userid], [callback])
+//user([detailed -> boolean], [callback]) or
+//user(userid, [callback])
 AnycookAPI.user = function(){
-	var userid;
-	var callback;
-	switch(arguments.length){
-	case 2:
-		var type2 = typeof arguments[1];
-		if(type2 === 'function'){
-			callback = arguments[1];
-		}
-		/* falls through */
-	case 1:
-		var type1 = typeof arguments[0];
-		if(type1 === 'string' || type1 === 'number'){
-			userid = arguments[0];
-		}
-		else if(type1 === 'function'){
-			callback = arguments[0];
-		}
-	}
+    var userid;
+    var callback;
+    switch(arguments.length){
+    case 2:
+        var type2 = typeof arguments[1];
+        if(type2 === 'function'){
+            callback = arguments[1];
+        }
+        /* falls through */
+    case 1:
+        var type1 = typeof arguments[0];
+        if(type1 === 'string' || type1 === 'number'){
+            userid = arguments[0];
+        }
+        else if(type1 === 'function'){
+            callback = arguments[0];
+        }
+    }
 
-	var path = '/user';
-	if(userid !== undefined){
-		path += '/'+userid;
-	}
-	return AnycookAPI._get(path, {}, callback);
+    var path = '/user';
+    if(userid !== undefined){
+        path += '/'+userid;
+    }
+    return AnycookAPI._get(path, {}, callback);
 
 };
 
 $.extend(AnycookAPI.user, {
-	number : function(callback){
-		var path = '/user/number';
-		return AnycookAPI._get(path, {}, callback);
-	},
-	//discussionNum(userid [, callback])
-	discussionNum : function(userid, callback){
-		var path = '/user/'+userid+'/discussionnum';
-		return AnycookAPI._get(path, {}, callback);
-	},
-	//schmeckt(userid, [callback])
-	schmeckt : function(userid, callback){
-		var path  = '/user/'+userid+'/schmeckt';
-		return AnycookAPI._get(path, {}, callback);
-	},
-	//image(user [, type])
-	image : function(user, type){
-		var settings = AnycookAPI._settings();
-		type = type || 'small';
-		return settings.baseUrl+'/user/'+encodeURIComponent(user)+'/image?type='+type+'&appid='+settings.appid;
-	},
-	//follow(userid)
-	follow : function(userid){
-		var path = '/user/'+userid+'/follow';
-		AnycookAPI._put(path);
-	},
-	//unfollow(userid)
-	unfollow : function(userid){
-		var path = '/user/'+userid+'/follow';
-		AnycookAPI._delete(path);
-	},
-	//recommendations([callback])
-	recommendations : function(callback){
-		var path = '/user/recommendations';
-		return AnycookAPI._get(path, {}, callback);
-	}
+    number : function(callback){
+        var path = '/user/number';
+        return AnycookAPI._get(path, {}, callback);
+    },
+    //discussionNum(userid [, callback])
+    discussionNum : function(userid, callback){
+        var path = '/user/'+userid+'/discussionnum';
+        return AnycookAPI._get(path, {}, callback);
+    },
+    //schmeckt(userid, [callback])
+    schmeckt : function(userid, callback){
+        var path  = '/user/'+userid+'/schmeckt';
+        return AnycookAPI._get(path, {}, callback);
+    },
+    //image(user [, type])
+    image : function(user, type){
+        var settings = AnycookAPI._settings();
+        type = type || 'small';
+        return settings.baseUrl+'/user/'+encodeURIComponent(user)+'/image?type='+type+'&appid='+settings.appid;
+    },
+    //follow(userid)
+    follow : function(userid){
+        var path = '/user/'+userid+'/follow';
+        AnycookAPI._put(path);
+    },
+    //unfollow(userid)
+    unfollow : function(userid){
+        var path = '/user/'+userid+'/follow';
+        AnycookAPI._delete(path);
+    },
+    //recommendations([callback])
+    recommendations : function(callback){
+        var path = '/user/recommendations';
+        return AnycookAPI._get(path, {}, callback);
+    }
 });
