@@ -85,6 +85,11 @@ AnycookAPI.recipe = function(){
 
 
 $.extend(AnycookAPI.recipe, {
+    //authors(recipeName, [callback])
+    authors : function(recipeName, callback){
+        var path = '/recipe/'+recipeName+'/authors';
+        return AnycookAPI._get(path, {}, callback);
+    },
     //ofTheDay([callback])
     ofTheDay : function(callback){
         var path = '/recipe/oftheday';
