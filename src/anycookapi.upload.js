@@ -22,19 +22,19 @@
 'use strict';
 //user([userid], [callback])
 AnycookAPI.upload = {
-	//recipeImage(file, progressCallback, complete [, uploadedCallback])
-	recipeImage : function(file, progressCallback, complete, uploaded){
-		AnycookAPI._postFile('/upload/image/recipe', {file : file}, progressCallback, complete, uploaded);
-	},
-	//userImage(file, progressCallback, complete [, uploadCallback])
-	userImage : function(file, progressCallback, complete, uploaded){
-		AnycookAPI._postFile('/upload/image/user', {file : file}, progressCallback, complete, uploaded);
-	},
-	//imagePath(fileName[, type[, size]])
-	imagePath : function(fileName, type, size){
-		var settings = AnycookAPI._settings();
-		size = size || 'big';
-		type = type || 'recipe';
-		return settings.baseUrl+'/images/'+type+'/'+size+'/'+fileName;
-	}
+    //recipeImage(file, progressCallback, complete [, uploadedCallback])
+    recipeImage : function(file, progressCallback, complete, uploaded){
+        AnycookAPI._postFile('/upload/image/recipe', {file : file}, progressCallback, complete, uploaded);
+    },
+    //userImage(file, progressCallback, complete [, uploadCallback])
+    userImage : function(file, progressCallback, complete, uploaded){
+        AnycookAPI._postFile('/upload/image/user', {file : file}, progressCallback, complete, uploaded);
+    },
+    //imagePath(fileName[, type[, size]])
+    imagePath : function(fileName, type, size){
+        var settings = AnycookAPI._settings();
+        size = size || 'big';
+        type = type || 'recipe';
+        return settings.imageBase+'/'+type+'/'+size+'/'+fileName;
+    }
 }

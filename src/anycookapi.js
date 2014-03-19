@@ -30,214 +30,215 @@
         return dfd.promise();
     }
 
-	globals.AnycookAPI = {
-		_settings : function(settings){
-			if(settings){ $(document).data('AnycookAPI', settings);	}
-			else{ return $(document).data('AnycookAPI'); }
-		},
-		_get : function(api, data, callback, error){
-			api = api || '';
-			data = data || {};
-			callback = callback || function(){};
+    globals.AnycookAPI = {
+        _settings : function(settings){
+            if(settings){ $(document).data('AnycookAPI', settings); }
+            else{ return $(document).data('AnycookAPI'); }
+        },
+        _get : function(api, data, callback, error){
+            api = api || '';
+            data = data || {};
+            callback = callback || function(){};
 
-			var settings = AnycookAPI._settings();
-			error = error || settings.error;
+            var settings = AnycookAPI._settings();
+            error = error || settings.error;
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
 
-			$.extend(data, {appId : settings.appId});
-			return $.ajax({
-			    url : url,
-			    type : 'GET',
-			    //dataType : 'json',
-			    data : data,
-			    xhrFields : {
-					withCredentials: true
-				},
-			    success : callback,
-			    error : error
-			});
-		},
-		_post : function(api, data, callback, error){
-			api = api || '';
-			data = data || {};
-			callback = callback || function(){};
+            $.extend(data, {appId : settings.appId});
+            return $.ajax({
+                url : url,
+                type : 'GET',
+                //dataType : 'json',
+                data : data,
+                xhrFields : {
+                    withCredentials: true
+                },
+                success : callback,
+                error : error
+            });
+        },
+        _post : function(api, data, callback, error){
+            api = api || '';
+            data = data || {};
+            callback = callback || function(){};
 
-			var settings = AnycookAPI._settings();
-			$.extend(data, {appId : settings.appId});
+            var settings = AnycookAPI._settings();
+            $.extend(data, {appId : settings.appId});
 
-			error = error || settings.error;
+            error = error || settings.error;
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
 
-			return $.ajax({
-			    url: url,
-			    type: 'POST',
-			    data:data,
-			    dataType:'json',
-			    contentType: 'application/x-www-form-urlencoded',
-			    xhrFields:{
-					withCredentials: true
-				},
-			    success: callback,
-			    error: error
-			});
-		},
-		_postJSON : function(api, data, callback, error){
-			api = api || '';
-			data = data || {};
-			callback = callback || function(){};
+            return $.ajax({
+                url: url,
+                type: 'POST',
+                data:data,
+                dataType:'json',
+                contentType: 'application/x-www-form-urlencoded',
+                xhrFields:{
+                    withCredentials: true
+                },
+                success: callback,
+                error: error
+            });
+        },
+        _postJSON : function(api, data, callback, error){
+            api = api || '';
+            data = data || {};
+            callback = callback || function(){};
 
-			var settings = AnycookAPI._settings();
-			error = error || settings.error;
+            var settings = AnycookAPI._settings();
+            error = error || settings.error;
 
-			if(!(typeof data === 'string')){
-				data = JSON.stringify(data);
-			}
+            if(!(typeof data === 'string')){
+                data = JSON.stringify(data);
+            }
 
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
 
-			return $.ajax({
-			    url: url+'?appId='+settings.appId,
-			    type: 'POST',
-			    data: data,
-			    dataType:'json',
-			    contentType: 'application/json; charset=utf-8',
-			    xhrFields:{
-					withCredentials: true
-				},
-			    success: callback,
-			    error: error
-			});
-		},
-		_postFile : function(api, data, progress, complete, uploaded){
-			// Uploading - for Firefox, Google Chrome and Safari
-			var xhr = new XMLHttpRequest();
-			xhr.withCredentials = true;
+            return $.ajax({
+                url: url+'?appId='+settings.appId,
+                type: 'POST',
+                data: data,
+                dataType:'json',
+                contentType: 'application/json; charset=utf-8',
+                xhrFields:{
+                    withCredentials: true
+                },
+                success: callback,
+                error: error
+            });
+        },
+        _postFile : function(api, data, progress, complete, uploaded){
+            // Uploading - for Firefox, Google Chrome and Safari
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
 
-			xhr.onreadystatechange=function()
-			{
-				//if document has been created
-				if(xhr.readyState==4 && xhr.status == 201){
-					var location = this.getResponseHeader('Location');
-					complete(location, xhr);
-				}
+            xhr.onreadystatechange=function()
+            {
+                //if document has been created
+                if(xhr.readyState==4 && xhr.status == 201){
+                    var location = this.getResponseHeader('Location');
+                    complete(location, xhr);
+                }
 
-			}
-			var settings = AnycookAPI._settings();
+            }
+            var settings = AnycookAPI._settings();
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
-			xhr.open("post", url, true);
+            xhr.open("post", url, true);
 
-			// Update progress bar
-			xhr.upload.addEventListener('progress', progress, false);
+            // Update progress bar
+            xhr.upload.addEventListener('progress', progress, false);
 
-			// File uploaded
-			if(uploaded){
-				xhr.addEventListener('load', uploaded, false);
-			}
-
-
-			// Set appropriate headers
-			//xhr.setRequestHeader("Content-Type", "multipart/form-data");
-			//xhr.setRequestHeader("X-File-Name", file.name);
-			//xhr.setRequestHeader("X-File-Size", file.size);
-			//xhr.setRequestHeader("X-File-Type", file.type);
-
-			//Create FormData object
-			var formData = new FormData();
-
-			for(var key in data){
-				formData.append(key, data[key]);
-			}
+            // File uploaded
+            if(uploaded){
+                xhr.addEventListener('load', uploaded, false);
+            }
 
 
-			// Send the file (doh)
-			xhr.send(formData);
-		},
-		_put : function(api,data, callback, error){
-			api = api || '';
-			data = data || {};
-			callback = callback || function(){};
+            // Set appropriate headers
+            //xhr.setRequestHeader("Content-Type", "multipart/form-data");
+            //xhr.setRequestHeader("X-File-Name", file.name);
+            //xhr.setRequestHeader("X-File-Size", file.size);
+            //xhr.setRequestHeader("X-File-Type", file.type);
 
-			var settings = AnycookAPI._settings();
-			error = error || settings.error;
+            //Create FormData object
+            var formData = new FormData();
 
-			var sessionId = settings.sessionId;
-            var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
-			$.extend(data, {appId : settings.appId});
+            for(var key in data){
+                formData.append(key, data[key]);
+            }
 
-			return $.ajax({
-			    url: url,
-			    type: 'PUT',
-			    data:data,
-			    contentType: 'application/x-www-form-urlencoded',
-			    xhrFields:{
-					withCredentials: true
-				},
-			    success: callback,
-				error: error
-			});
-		},
-		_putJSON : function(api, data, callback, error){
-			api = api || '';
-			data = data || {};
-			callback = callback || function(){};
 
-			var settings = AnycookAPI._settings();
-			error = error || settings.error;
+            // Send the file (doh)
+            xhr.send(formData);
+        },
+        _put : function(api,data, callback, error){
+            api = api || '';
+            data = data || {};
+            callback = callback || function(){};
+
+            var settings = AnycookAPI._settings();
+            error = error || settings.error;
+
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
+            $.extend(data, {appId : settings.appId});
 
-			if(!(typeof data === 'string')){ data = JSON.stringify(data); }
+            return $.ajax({
+                url: url,
+                type: 'PUT',
+                data:data,
+                contentType: 'application/x-www-form-urlencoded',
+                xhrFields:{
+                    withCredentials: true
+                },
+                success: callback,
+                error: error
+            });
+        },
+        _putJSON : function(api, data, callback, error){
+            api = api || '';
+            data = data || {};
+            callback = callback || function(){};
 
-			return $.ajax({
-			    url: url+'?appId='+settings.appId,
-			    type: 'PUT',
-			    data : data,
-			    dataType : 'json',
-			    contentType: 'application/json; charset=utf-8',
-			    xhrFields:{
-					withCredentials: true
-				},
-			    success: callback,
-			    error: error
-			});
-		},
-		_delete : function(api,data, callback, error){
-			api = api || '';
-			data = data || {};
-			callback = callback || function(){};
-
-			var settings = AnycookAPI._settings();
-			error = error || settings.error;
+            var settings = AnycookAPI._settings();
+            error = error || settings.error;
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
 
-			$.extend(data, {appId : settings.appId});
-			return $.ajax({
-			    url: url,
-			    type: 'DELETE',
-			    data:data,
-			    xhrFields:{
-	                withCredentials: true
-				},
-			    success: callback,
-			    error : error
-			});
-		},
-		init : function(options){
-			var settings = {
-				appId: -1,
-				baseUrl: 'http://api.anycook.de',
+            if(!(typeof data === 'string')){ data = JSON.stringify(data); }
+
+            return $.ajax({
+                url: url+'?appId='+settings.appId,
+                type: 'PUT',
+                data : data,
+                dataType : 'json',
+                contentType: 'application/json; charset=utf-8',
+                xhrFields:{
+                    withCredentials: true
+                },
+                success: callback,
+                error: error
+            });
+        },
+        _delete : function(api,data, callback, error){
+            api = api || '';
+            data = data || {};
+            callback = callback || function(){};
+
+            var settings = AnycookAPI._settings();
+            error = error || settings.error;
+            var sessionId = settings.sessionId;
+            var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
+
+            $.extend(data, {appId : settings.appId});
+            return $.ajax({
+                url: url,
+                type: 'DELETE',
+                data:data,
+                xhrFields:{
+                    withCredentials: true
+                },
+                success: callback,
+                error : error
+            });
+        },
+        init : function(options){
+            var settings = {
+                appId: -1,
+                baseUrl: 'http://api.anycook.de',
+                imageBase: 'http://images.anycook.de',
                 credentials: 'anycook-credentials.json',
-				error : function(xhr){
-					console.error(xhr);
-				}
-			};
+                error : function(xhr){
+                    console.error(xhr);
+                }
+            };
 
-			if(options){
+            if(options){
                 $.extend(settings, options);
             }
 
@@ -258,7 +259,7 @@
                 });
             });
 
-			return dfd.promise();
-		}
-	};
+            return dfd.promise();
+        }
+    };
 })( jQuery, this);
