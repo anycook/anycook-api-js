@@ -18,32 +18,33 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
+(function($){
+    'use strict';
+    AnycookAPI.registration = function(mail, username, password,callback){
+        var api = '/user';
+        var data = {
+            username : username,
+            mail : mail,
+            password : password
+        };
+        return AnycookAPI._post(api, data, callback);
+    };
 
-'use strict';
-AnycookAPI.registration = function(mail, username, password,callback){
-	var api = '/user';
-	var data = {
-		username : username,
-		mail : mail,
-		password : password
-	};
-	return AnycookAPI._post(api, data, callback);
-};
-
-$.extend(AnycookAPI.registration, {
-	checkMail : function(mail, callback){
-		var api = '/user/mail';
-		var data = {mail:mail};
-		return AnycookAPI._get(api, data, callback);
-	},
-	checkUsername : function(username, callback){
-		var api = '/user/name';
-		var data = {username:username};
-		return AnycookAPI._get(api, data, callback);
-	},
-	activate : function(activationKey, callback){
-		var api = '/session/activate';
-		var data = {activationkey:activationKey};
-		return AnycookAPI._post(api, data, callback);
-	}
-});
+    $.extend(AnycookAPI.registration, {
+        checkMail : function(mail, callback){
+            var api = '/user/mail';
+            var data = {mail:mail};
+            return AnycookAPI._get(api, data, callback);
+        },
+        checkUsername : function(username, callback){
+            var api = '/user/name';
+            var data = {username:username};
+            return AnycookAPI._get(api, data, callback);
+        },
+        activate : function(activationKey, callback){
+            var api = '/session/activate';
+            var data = {activationkey:activationKey};
+            return AnycookAPI._post(api, data, callback);
+        }
+    });
+})(jQuery);

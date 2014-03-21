@@ -18,10 +18,11 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
-
-'use strict';
-//life(data, [callback])
-AnycookAPI.life = function(data, callback){
-	var path = '/life';
-	return AnycookAPI._get(path, data, callback);
-};
+(function() {
+    'use strict';
+    //life(data, [callback])
+    AnycookAPI.life = function(data, callback){
+        var path = '/life';
+        return AnycookAPI._get(path, data, callback);
+    };
+})();

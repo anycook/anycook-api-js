@@ -18,44 +18,47 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
-'use strict';
-//category([category], [callback])
-AnycookAPI.category = function(){
-	var category;
-	var callback;
-	switch(arguments.length){
-	case 2:
-		var type2 = typeof arguments[1];
-		if(type2 === 'function'){
-			callback = arguments[1];
-		}
-		/* falls through */
-	case 1:
-		var type1 = typeof arguments[0];
-		if(type1 === 'string'){
-			category = arguments[0];
-		}
-		else if(type1 === 'function') {
-			callback = arguments[0];
-		}
-	}
+(function($){
+    'use strict';
+    //category([category], [callback])
+    AnycookAPI.category = function(){
+        var category;
+        var callback;
+        switch(arguments.length){
+        case 2:
+            var type2 = typeof arguments[1];
+            if(type2 === 'function'){
+                callback = arguments[1];
+            }
+            /* falls through */
+        case 1:
+            var type1 = typeof arguments[0];
+            if(type1 === 'string'){
+                category = arguments[0];
+            }
+            else if(type1 === 'function') {
+                callback = arguments[0];
+            }
+        }
 
-	var path = '/category';
-	if(category) {
-		path += '/'+category;
-	}
+        var path = '/category';
+        if(category) {
+            path += '/'+category;
+        }
 
-	return AnycookAPI._get(path, {}, callback);
-};
+        return AnycookAPI._get(path, {}, callback);
+    };
 
-//sorted([callback])
-AnycookAPI.category.sorted = function(callback){
-	var path = '/category';
-	return AnycookAPI._get(path, {sorted : true}, callback);
-};
-
-//number([callback])
-AnycookAPI.category.number = function(callback){
-	var path = '/category/number';
-	return AnycookAPI._get(path, {}, callback);
-};
+    $.extend(AnycookAPI.category, {
+        //sorted([callback])
+        sorted : function(callback){
+            var path = '/category';
+            return AnycookAPI._get(path, {sorted : true}, callback);
+        },
+        //number([callback])
+        number : function(callback){
+            var path = '/category/number';
+            return AnycookAPI._get(path, {}, callback);
+        }
+    });
+})(jQuery);

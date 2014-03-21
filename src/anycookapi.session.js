@@ -19,52 +19,54 @@
  * requires anycookapi.js
  */
 
-'use strict';
-//session([callback])
-AnycookAPI.session = function(callback, error){
-	var path = '/session';
-	return AnycookAPI._get(path, {}, callback, error);
-};
+(function($){
+    'use strict';
+    //session([callback])
+    AnycookAPI.session = function(callback, error){
+        var path = '/session';
+        return AnycookAPI._get(path, {}, callback, error);
+    };
 
-$.extend(AnycookAPI.session, {
-    //id(callback)
-    id : function(callback){
-        return AnycookAPI._get('/session/id', {}, callback);
-    },
-	//login(username, password, stayloggedin [,callback])
-	login : function(username, password, stayLoggedIn, callback, error){
-		var path = '/session';
-		var data = {
-			username:username,
-			password:password,
-			stayLoggedIn : stayLoggedIn ? true : false
-		};
-		return AnycookAPI._postJSON(path, data, callback, error);
-	},
-    facebookLogin : function(signedRequest, callback, error){
-        var path = '/session/facebook';
-        return AnycookAPI._postJSON(path, signedRequest, callback, error);
-    },
-	//logout([callback])
-	logout : function(callback){
-		var path = '/session';
-		return AnycookAPI._delete(path, {}, callback);
-	},
-	// getMailProvider(domain, [callback])
-	getMailProvider : function(domain, callback){
-		var path = '/session/mailprovider';
-		return AnycookAPI._get(path, {domain:domain}, callback);
-	},
-	// resetPassword(mail, callback)
-	resetPasswordRequest : function(mail, callback, error){
-		AnycookAPI._postJSON('/session/resetPassword', mail, callback, error);
-	},
-	resetPassword : function(id, newPassword, callback, error){
-		var data = {
-			id : id,
-			newPassword : newPassword
-		};
-		AnycookAPI._putJSON('/session/resetPassword', data, callback, error);
-	}
-});
+    $.extend(AnycookAPI.session, {
+        //id(callback)
+        id : function(callback){
+            return AnycookAPI._get('/session/id', {}, callback);
+        },
+        //login(username, password, stayloggedin [,callback])
+        login : function(username, password, stayLoggedIn, callback, error){
+            var path = '/session';
+            var data = {
+                username:username,
+                password:password,
+                stayLoggedIn : stayLoggedIn ? true : false
+            };
+            return AnycookAPI._postJSON(path, data, callback, error);
+        },
+        facebookLogin : function(signedRequest, callback, error){
+            var path = '/session/facebook';
+            return AnycookAPI._postJSON(path, signedRequest, callback, error);
+        },
+        //logout([callback])
+        logout : function(callback){
+            var path = '/session';
+            return AnycookAPI._delete(path, {}, callback);
+        },
+        // getMailProvider(domain, [callback])
+        getMailProvider : function(domain, callback){
+            var path = '/session/mailprovider';
+            return AnycookAPI._get(path, {domain:domain}, callback);
+        },
+        // resetPassword(mail, callback)
+        resetPasswordRequest : function(mail, callback, error){
+            AnycookAPI._postJSON('/session/resetPassword', mail, callback, error);
+        },
+        resetPassword : function(id, newPassword, callback, error){
+            var data = {
+                id : id,
+                newPassword : newPassword
+            };
+            AnycookAPI._putJSON('/session/resetPassword', data, callback, error);
+        }
+    });
+})(jQuery);
 

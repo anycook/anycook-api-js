@@ -18,118 +18,120 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
-'use strict';
-//autocomplete(term, [excludedCategorie, excludedIngredients, excludedTags, excludedUsers], [callback])
-AnycookAPI.autocomplete = function(term){
-	var path = '/autocomplete';
-	var data = {query : term};
-	var callback;
+(function($){
+    'use strict';
+    //autocomplete(term, [excludedCategorie, excludedIngredients, excludedTags, excludedUsers], [callback])
+    AnycookAPI.autocomplete = function(term){
+        var path = '/autocomplete';
+        var data = {query : term};
+        var callback;
 
-	switch(arguments.length){
-		case 6:
-			var type6 = typeof arguments[5];
-			if(type6 === 'function'){
-				callback = arguments[5];
-			}
-			/* falls through */
-		case 5:
-			data.excludedCategory = arguments[1];
+        switch(arguments.length){
+            case 6:
+                var type6 = typeof arguments[5];
+                if(type6 === 'function'){
+                  callback = arguments[5];
+                }
+                /* falls through */
+            case 5:
+                data.excludedCategory = arguments[1];
 
-			if(arguments[2]){
-				data.excludedIngredients = arguments[2].toString();
-			}
+                if(arguments[2]){
+                  data.excludedIngredients = arguments[2].toString();
+                }
 
-			if(arguments[3]){
-				data.excludedTags = arguments[3].toString();
-			}
+                if(arguments[3]){
+                  data.excludedTags = arguments[3].toString();
+                }
 
-			if(arguments[4]){
-				data.excludedUsers = arguments[4].toString();
-			}
-			break;
+                if(arguments[4]){
+                  data.excludedUsers = arguments[4].toString();
+                }
+                break;
 
-		case 2:
-			var type2 = typeof arguments[1];
-			if(type2 === 'function'){
-				callback = arguments[1];
-			}
-			break;
-	}
-	return AnycookAPI._get(path, data, callback);
-};
+            case 2:
+                var type2 = typeof arguments[1];
+                if(type2 === 'function'){
+                  callback = arguments[1];
+                }
+                break;
+        }
+        return AnycookAPI._get(path, data, callback);
+    };
 
-//user(term [, exclude][, callback])
-AnycookAPI.autocomplete.user = function(term){
-	var callback;
-	var data = {query : term};
+    $.extend(AnycookAPI.autocomplete, {
+        //user(term [, exclude][, callback])
+        user : function(term){
+            var callback;
+            var data = {query : term};
 
-	switch(arguments.length){
-		case 3:
-			var type3 = typeof arguments[2];
-			if(type3 === 'function'){
-				callback = arguments[2];
-			}
-			/* falls through */
-		case 2:
-			var type2 = typeof arguments[1];
-			if(type2 === 'function'){
-				callback = arguments[1];
-			} else{
-				data.exclude = arguments[1].toString();
-			}
-	}
+            switch(arguments.length){
+                case 3:
+                    var type3 = typeof arguments[2];
+                    if(type3 === 'function'){
+                        callback = arguments[2];
+                    }
+                /* falls through */
+            case 2:
+                var type2 = typeof arguments[1];
+                if(type2 === 'function'){
+                    callback = arguments[1];
+                } else{
+                    data.exclude = arguments[1].toString();
+                }
+            }
 
-	var path = '/autocomplete/user';
-	return AnycookAPI._get(path, data, callback);
-};
+            var path = '/autocomplete/user';
+            return AnycookAPI._get(path, data, callback);
+        },
+        //ingredient(term [, exclude][, callback])
+        ingredient : function(term){
+            var callback;
+            var data = {query : term};
 
-//ingredient(term [, exclude][, callback])
-AnycookAPI.autocomplete.ingredient = function(term){
-	var callback;
-	var data = {query : term};
+            switch(arguments.length){
+                case 3:
+                    var type3 = typeof arguments[2];
+                    if(type3 === 'function'){
+                        callback = arguments[2];
+                    }
+                    /* falls through */
+                case 2:
+                    var type2 = typeof arguments[1];
+                    if(type2 === 'function'){
+                        callback = arguments[1];
+                    } else {
+                        data.exclude = arguments[1].toString();
+                    }
+            }
 
-	switch(arguments.length){
-		case 3:
-			var type3 = typeof arguments[2];
-			if(type3 === 'function'){
-				callback = arguments[2];
-			}
-			/* falls through */
-		case 2:
-			var type2 = typeof arguments[1];
-			if(type2 === 'function'){
-				callback = arguments[1];
-			} else{
-				data.exclude = arguments[1].toString();
-			}
-	}
+            var path = '/autocomplete/ingredient';
+            return AnycookAPI._get(path, data, callback);
+        },
+        //tag(term [, exclude][, callback])
+        tag : function(term){
+            var callback;
+            var data = {query : term};
 
-	var path = '/autocomplete/ingredient';
-	return AnycookAPI._get(path, data, callback);
-};
+            switch(arguments.length){
+                case 3:
+                    var type3 = typeof arguments[2];
+                    if(type3 === 'function') {
+                        callback = arguments[2];
+                    }
+                    /* falls through */
+                case 2:
+                    var type2 = typeof arguments[1];
+                    if(type2 === 'function'){
+                        callback = arguments[1];
+                    }
+                    else {
+                        data.exclude = arguments[1].toString();
+                    }
+            }
 
-//tag(term [, exclude][, callback])
-AnycookAPI.autocomplete.tag = function(term){
-	var callback;
-	var data = {query : term};
-
-	switch(arguments.length){
-		case 3:
-			var type3 = typeof arguments[2];
-			if(type3 === 'function') {
-				callback = arguments[2];
-			}
-			/* falls through */
-		case 2:
-			var type2 = typeof arguments[1];
-			if(type2 === 'function'){
-				callback = arguments[1];
-			}
-			else{
-				data.exclude = arguments[1].toString();
-			}
-	}
-
-	var path = '/autocomplete/tag';
-	return AnycookAPI._get(path, data, callback);
-};
+            var path = '/autocomplete/tag';
+            return AnycookAPI._get(path, data, callback);
+        }
+    });
+})(jQuery);

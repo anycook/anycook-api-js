@@ -18,27 +18,27 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
+(function(){
+    'use strict';
+    AnycookAPI.discover = {
+        //recommended([callback])
+        recommended : function(callback){
+            var path = '/discover/recommended';
+            return AnycookAPI._get(path, {}, callback);
+        },
 
-'use strict';
-AnycookAPI.discover = {
-	//recommended([callback])
-	recommended : function(callback){
-		var path = '/discover/recommended';
-		return AnycookAPI._get(path, {}, callback);
-	},
+        //tasty([callback])
+        tasty : function(callback){
+            var path = '/discover/tasty';
+            return AnycookAPI._get(path, {}, callback);
+        },
 
-	//tasty([callback])
-	tasty : function(callback){
-		var path = '/discover/tasty';
-		return AnycookAPI._get(path, {}, callback);
-	},
-
-	//new([callback])
-	new : function(callback){
-		var path = '/discover/new';
-		return AnycookAPI._get(path, {}, callback);
-	}
-};
-
+        //new([callback])
+        new : function(callback){
+            var path = '/discover/new';
+            return AnycookAPI._get(path, {}, callback);
+        }
+    };
+})();
 
 

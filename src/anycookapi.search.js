@@ -18,17 +18,18 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
+(function(){
+    'use strict';
+    //search(querymap, [callback])
+    AnycookAPI.search = function(data, callback, error){
+        var path = '/search';
+        return AnycookAPI._postJSON(path, data, callback, error);
+    };
 
-'use strict';
-//search(querymap, [callback])
-AnycookAPI.search = function(data, callback, error){
-	var path = '/search';
-	return AnycookAPI._postJSON(path, data, callback, error);
-};
-
-//validate(term [,callback])
-AnycookAPI.search.validate = function(term, callback){
-	var path = '/search/validate';
-	var data = {q:term};
-	return AnycookAPI._get(path, data, callback);
-};
+    //validate(term [,callback])
+    AnycookAPI.search.validate = function(term, callback){
+        var path = '/search/validate';
+        var data = {q:term};
+        return AnycookAPI._get(path, data, callback);
+    };
+})();

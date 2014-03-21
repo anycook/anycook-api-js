@@ -19,8 +19,8 @@
  * requires anycookapi.js
  */
 
-'use strict';
-(function( $ , globals){
+(function( $, globals ){
+    'use strict';
     var loadCredentials = function(path){
         var dfd = $.Deferred();
 
@@ -28,7 +28,7 @@
         else { $.getJSON(path).always(dfd.resolve); }
 
         return dfd.promise();
-    }
+    };
 
     globals.AnycookAPI = {
         _settings : function(settings){
@@ -52,7 +52,7 @@
                 //dataType : 'json',
                 data : data,
                 xhrFields : {
-                    withCredentials: true
+                    withCredentials: settings.withCredentials
                 },
                 success : callback,
                 error : error
@@ -77,7 +77,7 @@
                 dataType:'json',
                 contentType: 'application/x-www-form-urlencoded',
                 xhrFields:{
-                    withCredentials: true
+                    withCredentials: settings.withCredentials
                 },
                 success: callback,
                 error: error
@@ -91,7 +91,7 @@
             var settings = AnycookAPI._settings();
             error = error || settings.error;
 
-            if(!(typeof data === 'string')){
+            if(typeof data !== 'string'){
                 data = JSON.stringify(data);
             }
 
@@ -105,7 +105,7 @@
                 dataType:'json',
                 contentType: 'application/json; charset=utf-8',
                 xhrFields:{
-                    withCredentials: true
+                    withCredentials: settings.withCredentials
                 },
                 success: callback,
                 error: error
@@ -116,15 +116,14 @@
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
 
-            xhr.onreadystatechange=function()
-            {
+            xhr.onreadystatechange = function() {
                 //if document has been created
-                if(xhr.readyState==4 && xhr.status == 201){
+                if(xhr.readyState === 4 && xhr.status === 201){
                     var location = this.getResponseHeader('Location');
                     complete(location, xhr);
                 }
 
-            }
+            };
             var settings = AnycookAPI._settings();
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
@@ -174,7 +173,7 @@
                 data:data,
                 contentType: 'application/x-www-form-urlencoded',
                 xhrFields:{
-                    withCredentials: true
+                    withCredentials: settings.withCredentials
                 },
                 success: callback,
                 error: error
@@ -190,7 +189,7 @@
             var sessionId = settings.sessionId;
             var url = settings.baseUrl + api + (sessionId ? ';jsessionid='+sessionId : '');
 
-            if(!(typeof data === 'string')){ data = JSON.stringify(data); }
+            if(typeof data !== 'string'){ data = JSON.stringify(data); }
 
             return $.ajax({
                 url: url+'?appId='+settings.appId,
@@ -199,7 +198,7 @@
                 dataType : 'json',
                 contentType: 'application/json; charset=utf-8',
                 xhrFields:{
-                    withCredentials: true
+                    withCredentials: settings.withCredentials
                 },
                 success: callback,
                 error: error
@@ -221,7 +220,7 @@
                 type: 'DELETE',
                 data:data,
                 xhrFields:{
-                    withCredentials: true
+                    withCredentials: settings.withCredentials
                 },
                 success: callback,
                 error : error
@@ -233,7 +232,10 @@
                 baseUrl: 'http://api.anycook.de',
                 imageBase: 'http://images.anycook.de',
                 credentials: 'anycook-credentials.json',
+                sendSessionId: true,
+                withCredentials: true,
                 error : function(xhr){
+                    /* globals console */
                     console.error(xhr);
                 }
             };
@@ -250,13 +252,16 @@
                 }
 
                 AnycookAPI._settings(settings);
-
-                //get session id
-                AnycookAPI.session.id(function(sessionId){
-                    settings.sessionId = sessionId;
-                    AnycookAPI._settings(settings);
+                if(settings.sendSessionId){
+                    //get session id
+                    AnycookAPI.session.id(function(sessionId){
+                        settings.sessionId = sessionId;
+                        AnycookAPI._settings(settings);
+                        dfd.resolve();
+                    });
+                } else {
                     dfd.resolve();
-                });
+                }
             });
 
             return dfd.promise();

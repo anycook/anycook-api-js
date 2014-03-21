@@ -18,82 +18,83 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
-
-'use strict';
-//tag([tagName],[data], [callback])
-AnycookAPI.tag = function(){
-    var tag;
-    var callback;
-    var data = {};
-    switch(arguments.length){
-    case 3:
-        var type3 = typeof arguments[2];
-        if(type3 === 'function'){
-            callback = arguments[2];
-        }
-        else if(type3 === 'object'){
-            data = arguments[2];
-        }
-        /* falls through */
-    case 2:
-        var type2 = typeof arguments[1];
-        if(type2 === 'function'){
-            callback = arguments[1];
-        }
-        else if(type2 === 'object'){
-            data = arguments[1];
-        }
-        /* falls through */
-    case 1:
-        var type1 = typeof arguments[0];
-        if(type1 === 'string'){
-            tag = arguments[0];
-        }
-        else if(type1 === 'function'){
-            callback = arguments[0];
-        }
-        else if(type1 === 'object'){
-            data = arguments[0];
-        }
-    }
-
-    var path = '/tag';
-    if(tag){
-        path += '/'+tag;
-    }
-    return AnycookAPI._get(path, data, callback);
-};
-
-$.extend(AnycookAPI.tag, {
-    number : function(callback){
-        var path  = '/tag/number';
-        return AnycookAPI._get(path, {}, callback);
-    },
-    suggest : function(recipename, tags, callback){
-        var path  = '/recipe/'+recipename+'/tags';
-        return AnycookAPI._postJSON(path,  tags, callback);
-    },
-    //popular([recipe], [callback])
-    popular : function(){
+(function($){
+    'use strict';
+    //tag([tagName],[data], [callback])
+    AnycookAPI.tag = function(){
+        var tag;
         var callback;
         var data = {};
         switch(arguments.length){
+        case 3:
+            var type3 = typeof arguments[2];
+            if(type3 === 'function'){
+                callback = arguments[2];
+            }
+            else if(type3 === 'object'){
+                data = arguments[2];
+            }
+            /* falls through */
         case 2:
             var type2 = typeof arguments[1];
             if(type2 === 'function'){
                 callback = arguments[1];
             }
+            else if(type2 === 'object'){
+                data = arguments[1];
+            }
             /* falls through */
         case 1:
             var type1 = typeof arguments[0];
             if(type1 === 'string'){
-                data.recipe = arguments[0];
+                tag = arguments[0];
             }
             else if(type1 === 'function'){
-                callback = arguments[1];
+                callback = arguments[0];
+            }
+            else if(type1 === 'object'){
+                data = arguments[0];
             }
         }
-        var path  = '/tag/popular';
+
+        var path = '/tag';
+        if(tag){
+            path += '/'+tag;
+        }
         return AnycookAPI._get(path, data, callback);
-    }
-});
+    };
+
+    $.extend(AnycookAPI.tag, {
+        number : function(callback){
+            var path  = '/tag/number';
+            return AnycookAPI._get(path, {}, callback);
+        },
+        suggest : function(recipename, tags, callback){
+            var path  = '/recipe/'+recipename+'/tags';
+            return AnycookAPI._postJSON(path,  tags, callback);
+        },
+        //popular([recipe], [callback])
+        popular : function(){
+            var callback;
+            var data = {};
+            switch(arguments.length){
+            case 2:
+                var type2 = typeof arguments[1];
+                if(type2 === 'function'){
+                    callback = arguments[1];
+                }
+                /* falls through */
+            case 1:
+                var type1 = typeof arguments[0];
+                if(type1 === 'string'){
+                    data.recipe = arguments[0];
+                }
+                else if(type1 === 'function'){
+                    callback = arguments[1];
+                }
+            }
+            var path  = '/tag/popular';
+            return AnycookAPI._get(path, data, callback);
+        }
+    });
+})(jQuery);

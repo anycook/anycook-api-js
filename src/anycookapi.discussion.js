@@ -18,45 +18,47 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
+(function($){
+    'use strict';
+    //discussion(recipename [, callback])
+    AnycookAPI.discussion = function(recipename, lastid, callback){
+        var path = '/discussion/'+recipename;
+        var data = {lastid:lastid};
+        return AnycookAPI._get(path, data, callback);
+    };
 
-'use strict';
-//discussion(recipename [, callback])
-AnycookAPI.discussion = function(recipename, lastid, callback){
-	var path = '/discussion/'+recipename;
-	var data = {lastid:lastid};
-	return AnycookAPI._get(path, data, callback);
-};
+    $.extend(AnycookAPI.discussion, {
+        //answer(recipename, text [, parentid] [, callback])
+        answer : function(recipename, text){
+            var path = '/discussion/'+recipename;
+            var data = {comment:text};
+            var callback;
+            switch(arguments.length){
+            case 4:
+                callback = arguments[3];
+                /* falls through */
+            case 3:
+                var type = typeof arguments[2];
+                if(type === 'function'){
+                    callback = arguments[2];
+                }else{
+                    data.pid = Number(arguments[2]);
+                }
+            }
 
-//answer(recipename, text [, parentid] [, callback])
-AnycookAPI.discussion.answer = function(recipename, text){
-	var path = '/discussion/'+recipename;
-	var data = {comment:text};
-	var callback;
-	switch(arguments.length){
-	case 4:
-		callback = arguments[3];
-		/* falls through */
-	case 3:
-		var type = typeof arguments[2];
-		if(type === 'function'){
-			callback = arguments[2];
-		}else{
-			data.pid = Number(arguments[2]);
-		}
-	}
-
-	return AnycookAPI._post(path, data, callback);
-};
-
-//like(recipeName, id [, callback])
-AnycookAPI.discussion.like = function(recipename, id, callback){
-	recipename = encodeURIComponent(recipename);
-	var path = '/discussion/like/'+recipename+'/'+id;
-	return AnycookAPI._put(path, {}, callback);
-};
-
-AnycookAPI.discussion.unlike = function(recipename, id, callback){
-	recipename = encodeURIComponent(recipename);
-	var path = '/discussion/like/'+recipename+'/'+id;
-	return AnycookAPI._delete(path, {}, callback);
-};
+            return AnycookAPI._post(path, data, callback);
+        },
+        //like(recipeName, id [, callback])
+        like : function(recipename, id, callback){
+            recipename = encodeURIComponent(recipename);
+            var path = '/discussion/like/'+recipename+'/'+id;
+            return AnycookAPI._put(path, {}, callback);
+        },
+        //unlike(recipeName, id [, callback])
+        unlike : function(recipename, id, callback){
+            recipename = encodeURIComponent(recipename);
+            var path = '/discussion/like/'+recipename+'/'+id;
+            return AnycookAPI._delete(path, {}, callback);
+        }
+    });
+})(jQuery);

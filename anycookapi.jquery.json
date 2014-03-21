@@ -1,0 +1,28 @@
+{
+  "name": "anycookapi",
+  "title": "Anycook API Js",
+  "description": "Javascript client library for anycook-api",
+  "version": "0.1.0",
+  "homepage": "https://github.com/anycook/anycook-api-js",
+  "author": {
+    "name": "Jan Graßegger",
+    "url": "https://github.com/gesundkrank"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anycook/anycook-api-js"
+  },
+  "bugs": "https://github.com/anycook/anycook-api-js/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "latest"
+  },
+  "keywords": [
+    "jquery-plugin"
+  ]
+}

@@ -18,45 +18,46 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
-
-'use strict';
-AnycookAPI.setting = {
-	//confirmMail(code, callback)
-	confirmMail : function(code, callback, error){
-		var path = '/setting/email';
-		return AnycookAPI._postJSON(path, code, callback, error);
-	},
-    //changePassword(oldPassword, newPassword [, callback [, error]])
-    changePassword : function(oldPassword, newPassword, callback, error){
-        var path = '/setting/password';
-        return AnycookAPI._putJSON(path, {newPassword:newPassword, oldPassword:oldPassword}, callback, error);
-    },
-	//setMail(newMail [, callback])
-	setMail : function(newMail, callback){
-		var path = '/setting/email';
-		return AnycookAPI._putJSON(path, newMail, callback);
-	},
-	setName : function(newName, callback){
-		var path = '/setting/name';
-		return AnycookAPI._putJSON(path, newName, callback);
-	},
-	//setPlace(newPlace [, callback])
-	setPlace : function(newPlace, callback){
-		var path = '/setting/place';
-		return AnycookAPI._putJSON(path, newPlace, callback);
-	},
-	//setText(newText [, callback])
-	setText : function(newText, callback){
-		var path = '/setting/text';
-		return AnycookAPI._putJSON(path, newText, callback);
-	},
-	//notification([callback])
-	notification : function(callback){
-		var path = '/setting/notification';
-		return AnycookAPI._get(path, {}, callback);
-	},
-	saveNotifications : function(settings, callback, error){
-		var path = '/setting/notification';
-		return AnycookAPI._putJSON(path, settings, callback, error);
-	}
-};
+(function(){
+    'use strict';
+    AnycookAPI.setting = {
+        //confirmMail(code, callback)
+        confirmMail : function(code, callback, error){
+            var path = '/setting/email';
+            return AnycookAPI._postJSON(path, code, callback, error);
+        },
+        //changePassword(oldPassword, newPassword [, callback [, error]])
+        changePassword : function(oldPassword, newPassword, callback, error){
+            var path = '/setting/password';
+            return AnycookAPI._putJSON(path, {newPassword:newPassword, oldPassword:oldPassword}, callback, error);
+        },
+        //setMail(newMail [, callback])
+        setMail : function(newMail, callback){
+            var path = '/setting/email';
+            return AnycookAPI._putJSON(path, newMail, callback);
+        },
+        setName : function(newName, callback){
+            var path = '/setting/name';
+            return AnycookAPI._putJSON(path, newName, callback);
+        },
+        //setPlace(newPlace [, callback])
+        setPlace : function(newPlace, callback){
+            var path = '/setting/place';
+            return AnycookAPI._putJSON(path, newPlace, callback);
+        },
+        //setText(newText [, callback])
+        setText : function(newText, callback){
+            var path = '/setting/text';
+            return AnycookAPI._putJSON(path, newText, callback);
+        },
+        //notification([callback])
+        notification : function(callback){
+            var path = '/setting/notification';
+            return AnycookAPI._get(path, {}, callback);
+        },
+        saveNotifications : function(settings, callback, error){
+            var path = '/setting/notification';
+            return AnycookAPI._putJSON(path, settings, callback, error);
+        }
+    };
+})();
