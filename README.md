@@ -4,22 +4,7 @@ Javascript client library for anycook-api
 
 ## Getting Started
 
-Download the [production version][min] or the [development version][max].
-
-[min]: https://raw.github.com/gesundkrank/jquery-anycook-api-js/master/dist/jquery.anycook-api-js.min.js
-[max]: https://raw.github.com/gesundkrank/jquery-anycook-api-js/master/dist/jquery.anycook-api-js.js
-
-In your web page:
-
-```html
-<script src="jquery.js"></script>
-<script src="dist/anycook-api-js.min.js"></script>
-<script>
-jQuery(function($) {
-  $.awesome(); // "awesome"
-});
-</script>
-```
+_(Coming soon)_
 
 ## Documentation
 _(Coming soon)_
