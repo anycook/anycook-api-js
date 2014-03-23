@@ -1,4 +1,4 @@
-# Anycook API Js
+# Anycook API Js [![Build Status](https://jenkins.anycook.de/buildStatus/icon?job=anycook-api-js)](https://jenkins.anycook.de/job/anycook-api-js/)
 
 Javascript client library for anycook-api
 
