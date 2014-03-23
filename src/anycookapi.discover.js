@@ -18,9 +18,15 @@
  * @author Jan Graßegger <jan@anycook.de>
  * requires anycookapi.js
  */
-(function(){
+(function($){
     'use strict';
-    AnycookAPI.discover = {
+    //discover([callback, [error]])
+    AnycookAPI.discover = function(callback, error){
+        var path = '/discover';
+        return AnycookAPI._get(path, {}, callback, error);
+    };
+
+    $.extend(AnycookAPI.discover, {
         //recommended([callback])
         recommended : function(callback){
             var path = '/discover/recommended';
@@ -38,7 +44,7 @@
             var path = '/discover/new';
             return AnycookAPI._get(path, {}, callback);
         }
-    };
-})();
+    });
+})(jQuery);
 
 
