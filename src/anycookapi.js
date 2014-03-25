@@ -232,7 +232,8 @@
                 baseUrl: 'http://api.anycook.de',
                 imageBase: 'http://images.anycook.de',
                 credentials: 'anycook-credentials.json',
-                sendSessionId: true,
+                // send session id if cookies are disabled
+                sendSessionId: !navigator.cookieEnabled,
                 withCredentials: true,
                 error : function(xhr){
                     /* globals console */
