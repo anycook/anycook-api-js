@@ -20,18 +20,18 @@
  */
 (function($){
     'use strict';
-    //discussion(recipename [, callback])
-    AnycookAPI.discussion = function(recipename, lastid, callback){
-        var path = '/discussion/'+recipename;
-        var data = {lastid:lastid};
+    //discussion(recipeName [, callback])
+    AnycookAPI.discussion = function(recipeName, lastId, callback){
+        var path = '/'+recipeName+'/discussion';
+        var data = { lastId: lastId };
         return AnycookAPI._get(path, data, callback);
     };
 
     $.extend(AnycookAPI.discussion, {
-        //answer(recipename, text [, parentid] [, callback])
-        answer : function(recipename, text){
-            var path = '/discussion/'+recipename;
-            var data = {comment:text};
+        //answer(recipeName, text [, parentid] [, callback])
+        answer : function(recipeName, text){
+            var path = '/'+recipeName+'/discussion';
+            //var data = {comment:text};
             var callback;
             switch(arguments.length){
             case 4:
@@ -42,22 +42,22 @@
                 if(type === 'function'){
                     callback = arguments[2];
                 }else{
-                    data.pid = Number(arguments[2]);
+                    path += '/'+Number(arguments[2]);
                 }
             }
 
-            return AnycookAPI._post(path, data, callback);
+            return AnycookAPI._post(path, text, callback);
         },
         //like(recipeName, id [, callback])
-        like : function(recipename, id, callback){
-            recipename = encodeURIComponent(recipename);
-            var path = '/discussion/like/'+recipename+'/'+id;
+        like : function(recipeName, id, callback){
+            //recipeName = encodeURIComponent(recipeName);
+            var path = '/'+recipeName+'/discussion/'+id+'/like';
             return AnycookAPI._put(path, {}, callback);
         },
         //unlike(recipeName, id [, callback])
-        unlike : function(recipename, id, callback){
-            recipename = encodeURIComponent(recipename);
-            var path = '/discussion/like/'+recipename+'/'+id;
+        unlike : function(recipeName, id, callback){
+            //recipeName = encodeURIComponent(recipeName);
+            var path = '/'+recipeName+'/discussion/'+id+'/like';
             return AnycookAPI._delete(path, {}, callback);
         }
     });
