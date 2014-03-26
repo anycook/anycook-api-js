@@ -71,7 +71,11 @@
         },
         suggest : function(recipename, tags, callback){
             var path  = '/recipe/'+recipename+'/tags';
-            return AnycookAPI._postJSON(path,  tags, callback);
+            var tagObjects = [];
+            for(var i in tags){
+                tagObjects.push({name: tags[i]});
+            }
+            return AnycookAPI._postJSON(path, tagObjects, callback);
         },
         //popular([recipe], [callback])
         popular : function(){
