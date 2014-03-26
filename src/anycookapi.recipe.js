@@ -95,6 +95,27 @@
             var path = '/recipe/oftheday';
             return AnycookAPI._get(path, {}, callback);
         },
+        // returns all tags and their recipes. Tags can be filtered by active field
+        //tag([active], [callback])
+        tag : function(){
+            var data = {};
+            var callback;
+
+            switch(arguments.length){
+                case 2:
+                    var type2 = typeof arguments[1];
+                    if(type2 === 'function'){
+                        callback = arguments[1];
+                    }
+                    /* falls through */
+                case 1:
+                    var type1 = typeof arguments[0];
+                    if(type1 === 'boolean') { data.active = arguments[0]; }
+                    else if(type1 === 'function') { callback = arguments[0]; }
+            }
+            var path = '/recipe/tag';
+            return AnycookAPI._get(path, data, callback);
+        },
         //ingredients(recipename, [versionid], [callback])
         ingredients : function(recipe){
             var versionid;
