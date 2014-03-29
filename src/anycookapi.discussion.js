@@ -46,7 +46,7 @@
                 }
             }
 
-            return AnycookAPI._post(path, text, callback);
+            return AnycookAPI._postJSON(path, text, callback);
         },
         //like(recipeName, id [, callback])
         like : function(recipeName, id, callback){
