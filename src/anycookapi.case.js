@@ -21,8 +21,8 @@
 (function() {
     'use strict';
     //case(data, [callback])
-    AnycookAPI.case = function(data, callback){
+    AnycookAPI.case = function(callback){
         var path = '/case';
-        return AnycookAPI._get(path, data, callback);
+        return AnycookAPI._get(path, {}, callback);
     };
 })();
