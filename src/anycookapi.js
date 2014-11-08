@@ -229,8 +229,8 @@
         init : function(options){
             var settings = {
                 appId: -1,
-                baseUrl: 'http://api.anycook.de',
-                imageBase: 'http://images.anycook.de',
+                baseUrl: 'https://api.anycook.de',
+                imageBase: 'https://s3-eu-west-1.amazonaws.com/images.anycook.de',
                 credentials: 'anycook-credentials.json',
                 // send session id if cookies are disabled
                 sendSessionId: !navigator.cookieEnabled,
