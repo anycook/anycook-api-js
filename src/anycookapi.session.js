@@ -51,11 +51,6 @@
             var path = '/session';
             return AnycookAPI._delete(path, {}, callback);
         },
-        // getMailProvider(domain, [callback])
-        getMailProvider : function(domain, callback){
-            var path = '/session/mailprovider';
-            return AnycookAPI._get(path, {domain:domain}, callback);
-        },
         // resetPassword(mail, callback)
         resetPasswordRequest : function(mail, callback, error){
             AnycookAPI._postJSON('/session/resetPassword', mail, callback, error);
